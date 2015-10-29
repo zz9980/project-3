@@ -1,16 +1,12 @@
 # project-3
 Redo project 2, using Objects (classes for Ball, Button, etc.)
 
-# project-2:  
-Pool table with colliding balls.  (See project 2 and exercise x5)
+Table has four sides, plus a "wall" down the middle (as in the midterm exam).
 
 FIVE pool balls, each with a different color and a different number on it.
 The "cue" ball is white, with no number; it starts at rest, in the middle of the LEFT half of the table.
 
-Table has four sides, plus a "wall" down the middle (as in the midterm exam).
-
-Balls bounce off sides of table (left or wall, top, right, bottom),  
-and collide "elastically" with one another.
+Balls bounce off sides of table (left or wall, top, right, bottom), and collide "elastically" with one another.
 
 In an "elastic" collision, the velocities are exchanged  
 (i.e. the DX and DY of one ball become the DX and DY of the other ball!)  
