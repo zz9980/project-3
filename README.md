@@ -17,11 +17,11 @@ In an "elastic" collision, the velocities are exchanged
 
 Add **buttons** to do the following:
 
-  # reset four of the balls to a position on the right side of the table, giving each a random velocity.
+  - reset four of the balls to a position on the right side of the table, giving each a random velocity.
   Also reset the cue ball to the middle of the LEFT half of the table, with NO velocity,
   and restore the "wall".
    
-  # remove the "wall" (and allow balls to move anywhere within the table).
+  - remove the "wall" (and allow balls to move anywhere within the table).
   
   
   
