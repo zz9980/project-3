@@ -1,5 +1,4 @@
-# project-3
-Redo project 2, using Objects (classes for Ball, Button, etc.)
+# project-3:  Redo project 2, using Objects (classes for Ball, Button, etc.)
 
 Table has four sides, plus a "wall" down the middle (as in the midterm exam).
 
