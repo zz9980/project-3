@@ -16,7 +16,7 @@ Add **buttons** to do the following:
   - WALL:  Remove the "wall" (and allow balls to move anywhere within the table).
   
   - BIRD:  An **animated** bird flies across the table from right to left.  
-  If this button is clicked again, while the bird is still on the screen,  
+  If this button is clicked AGAIN while bird is still visible on the screen,  
   the bird drops a "bomb" which falls downward with increasing Y and DY (but the same DX as the bird).
 
   - RAT:   An **animated** "rat" appears on the left side of the table at random Y,
