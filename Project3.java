@@ -2,6 +2,7 @@
 
 Cloud c1;
 Ball c, r, g, b, y;
+Buttons reset, rwall, bird, rat;
 
 
 int tableRed=70, tableGreen=240, tableBlue=230;                               // pool table color
@@ -17,6 +18,7 @@ void setup() {
   bottom= height-80;
   middle= left + (right-left) / 2;
   
+  //creating balls.
   c1 = new Cloud(40);
   c= new Ball( width/8, height/2, color (255),0,0);                                    // cue ball
   c.name= "0";
@@ -28,7 +30,17 @@ void setup() {
   b.name= "3";
   y= new Ball( color (255,255,0), random( middle+25, right), random (top, bottom) );   // yellow ball 
   y.name= "4";
-
+  
+  //creating buttons, and name.
+  reset = new Buttons( 70,105,60,30);
+  reset.name= "RESET";
+  rwall = new Buttons( 140,105,60,30);
+  rwall.name= "WALL";
+  bird  = new Buttons( 70,145,60,30);
+  bird.name= "BIRDS";
+  rat   = new Buttons( 140,145,60,30);
+  rat.name= "RAT";
+  
   reset();
 
 }
@@ -50,7 +62,7 @@ void draw() {
   grass();
   cloud();
   ball();
-
+  buttons();
 }
 
 
@@ -75,7 +87,7 @@ void table( float east, float north, float west, float south ) {
 
 void grass() {
   stroke(0,255,0);                           //grass color green.
-  strokeWeight(2);
+  strokeWeight(3);
   
   int gx = 10;
    while( gx < width-20) {
@@ -122,10 +134,8 @@ void ball() {
   collision( g,y);
  
   collision( b,y);
- 
-  
- 
-}
+} 
+
 void collision( Ball p, Ball q ) {
  if ( p.hit( q.bx,q.by ) ) {
     float tmp;
@@ -142,17 +152,58 @@ void keyPressed() {
     reset();
   }
 
+
+}
+
+//click on ball to reset the ball.
+void mousePressed() {
+  r.mousePressed();
+  g.mousePressed();
+  b.mousePressed();
+  y.mousePressed();
+  
+  if ( mouseX<100 && mouseX>40 && mouseY<120 && mouseY>90) {
+   reset();
+  }
+  
+  if ( mouseX<170 && mouseX>110 && mouseY<120 && mouseY>90) {
+   wall=false;
+   r.move2();
+   g.move2();
+   b.move2();
+   y.move2();
+  }
+
+}
+
+void buttons() {
+  reset.show();
+  rwall.show();
+  bird.show();
+  rat.show();
 }
 
 
+class Buttons {
+  int mx, my, l, w;              //buttons centerx , centery , length , width.
+  String name="";
+  
+ Buttons( int templ, int tempr, int tempt, int tempb) {
+  mx=templ;
+  my=tempr;
+  l=tempt;
+  w=tempb;
+}
 
+void show() {
+  fill(0,0,0,30);
+  rectMode(CENTER);
+  rect( mx, my, l, w);
+  textSize(14);
+  text( name, mx-20, my+5);
+ }
 
-
-
-
-
-
-
+}
 class Cloud {
   int c=255;                    //color
   float cx=40, cy=30;           //positions x, y.
@@ -208,22 +259,39 @@ Ball( color tempc, float tempx, float tempy) {
   by = by + bdy;
   // bounce off wall
   if ( bx < middle+25 || bx > right ) bdx *= -1;
-  if ( by < top || by > bottom ) bdy *= -1;
-  
+  if ( by < top || by > bottom )      bdy *= -1;
  }
+ void move2() { 
+   if (wall=!wall) { 
+    middle=left-20;
+   }
+
+
  
+}
  void reset() {
     bx=  random(middle+25, right );
     by=  random( top, bottom );
     bdx=  random( 1,3 );
     bdy=  random( 1,3 );
- }
+    wall= true;
+    middle= 355;
+
+
+  }
   boolean hit( float x, float y ) {
     if (  dist( x,y, this.bx,this.by ) < 30 ) return true;
     else return false;
   }
+ 
+ void mousePressed() {
+   if (dist ( bx, by, mouseX, mouseY) <30) {
+     bx=  random( 390,right );     
+     by=  random( top, bottom );
+     bdx=  random( 1,3 );    
+     bdy=  random( 1,3 );
+   }
 
-
-}
-
+ }
   
+}
