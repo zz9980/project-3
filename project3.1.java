@@ -1,20 +1,17 @@
 //// Project 3, Teng Lin 2015/11/4.
 
 
-
-//////global
-
-
 Ball c, r, g, b, y;
 Buttons reset, rwall, bird, rat;
 
-
-
-float cloudx=40, cloudy=30, clouddx=random(1,3) ;                             // cloud variables
+////global
+float ratx= 40, raty=random(100,400), ratdx=1;
+float cloudx=40, cloudy=30, clouddx=random(1,2) ;                             // cloud variables
 int tableRed=70, tableGreen=240, tableBlue=230;                               // pool table color
 float left=50, right=450, top=100, bottom=250;                                // Table boundaries
 float middle=250;
 boolean wall=true;
+boolean rat2= false;
 
 void setup() {
   size( 700, 500 );                                                           //window size
@@ -55,7 +52,18 @@ void reset() {
   g.reset();
   b.reset();
   y.reset();
+  c.bx=width/8;
+  c.by=height/2;
+  c.bdx=0;
+  c.bdy=0;
+  r.bx=middle+30;
+  r.by=height/3;
+  g.bx=middle+random(60,65);
+  g.by=height/3.2;
   
+  rat2=false;
+  ratx= 40; 
+  raty=random(100,400);
 }
   
 
@@ -66,7 +74,10 @@ void draw() {
   grass();
   cloud();
   ball();
+  rat2();
   buttons();
+  
+
 }
 
 
@@ -106,14 +117,16 @@ void cloud() {
   noStroke();
   float x;
   
+  //construct 7 clouds.
   for ( x = cloudx ; x < width; x++) {
     fill(255);
     ellipse(x, cloudy, 60,40);
-    x= x+100;
+    x= x+100;                              //spacing
   }
-    cloudx = cloudx + clouddx;
-    cloudx %= width+(width/50);
+    cloudx = cloudx + clouddx;             //cloud moving
    
+    cloudx %= width+(width/50);            //cloud move back to screen 
+    
 }
 
 
@@ -157,6 +170,40 @@ void collision( Ball p, Ball q ) {
   }
 }
 
+//rat
+
+void rat2() { 
+  
+   if (rat2) {
+   fill(0);
+   ellipse(ratx, raty, 30,30);
+    
+   //moving rat
+   ratx = ratx + ratdx;
+   
+   
+   }
+  
+  
+  
+  
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //// HANDLERS:  keys, click
 void keyPressed() {
   if( key == 'r') {
@@ -168,15 +215,16 @@ void keyPressed() {
 
 //click on ball to reset the ball.
 void mousePressed() {
+
   r.mousePressed();
   g.mousePressed();
   b.mousePressed();
   y.mousePressed();
-  
+  //reset button
   if ( mouseX<100 && mouseX>40 && mouseY<120 && mouseY>90) {
    reset();
   }
-  
+  //wall button
   if ( mouseX<170 && mouseX>110 && mouseY<120 && mouseY>90) {
    wall=false;
    r.move2();
@@ -184,6 +232,24 @@ void mousePressed() {
    b.move2();
    y.move2();
   }
+  //bird button
+  if ( mouseX<100 && mouseX>40 && mouseY<160 && mouseY>130) {
+   
+  }
+  
+  //rat button
+  if ( mouseX<170 && mouseX>110 && mouseY<160 && mouseY>130) {
+   rat2=true;
+   
+  
+    
+   }
+    
+  
+  
+  
+  
+  
 
 }
 
@@ -205,7 +271,7 @@ class Buttons {
   my=tempr;
   l=tempt;
   w=tempb;
-}
+ }
 
 void show() {
   fill(0,0,0,30);
@@ -223,7 +289,7 @@ void show() {
 class Ball {
   int c;
   float bx, by;
-  float bdx=random(1,3), bdy=random(1,3);
+  float bdx=random(.5,1.5), bdy=random(.5,1.5);
   String name="";
   
 Ball( float tempx, float tempy, color tempc, float tempdx, float tempdy) {
@@ -233,13 +299,13 @@ Ball( float tempx, float tempy, color tempc, float tempdx, float tempdy) {
   bdy=tempdy;
   bdx=tempdx;
   
-} 
+ } 
 Ball( color tempc, float tempx, float tempy) {
   c=tempc;
   bx=tempx;
   by=tempy;
  
-}
+ }
   
  void show() {
    fill(c);
@@ -254,12 +320,12 @@ Ball( color tempc, float tempx, float tempy) {
   bx = bx + bdx;
   by = by + bdy;
   // bounce off wall
-  if ( bx < middle+25 || bx > right ) bdx *= -1;
-  if ( by < top || by > bottom )      bdy *= -1;
+  if ( bx < middle || bx > right )   bdx *= -1;
+  if ( by < top || by > bottom )     bdy *= -1;
  }
  void move2() { 
    if (wall=!wall) { 
-    middle=left-20;
+    middle=left;
    }
 
 
@@ -268,10 +334,12 @@ Ball( color tempc, float tempx, float tempy) {
  void reset() {
     bx=  random(middle+25, right );
     by=  random( top, bottom );
-    bdx=  random( 1,3 );
-    bdy=  random( 1,3 );
+    bdx=  random( .5,1.5 );
+    bdy=  random( .5,1.5 );
     wall= true;
-    middle= 355;
+    middle= (width/2)+30;
+   
+  
 
 
   }
@@ -284,8 +352,8 @@ Ball( color tempc, float tempx, float tempy) {
    if (dist ( bx, by, mouseX, mouseY) <30) {
      bx=  random( 390,right );     
      by=  random( top, bottom );
-     bdx=  random( 1,3 );    
-     bdy=  random( 1,3 );
+     bdx=  random( .5,1.5 );    
+     bdy=  random( .5,1.5 );
    }
 
  }
